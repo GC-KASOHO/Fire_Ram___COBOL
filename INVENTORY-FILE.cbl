@@ -26,7 +26,7 @@
        01  UserChoice  PIC 9.
        01 FILE-STATUS PIC XX.
        01 I-ID PIC 9(5).
-       01 I-NAME PIC 9(5).
+       01 I-NAME PIC X(20).
        01 I-PRICE PIC 9(5).
        01 I-QUANTITY PIC 9(5).
 
@@ -49,22 +49,16 @@
                EVALUATE UserChoice
                   WHEN 1
                        PERFORM ADD-ITEM
-      *                
-      *            WHEN 2
-      *                 
-      *            WHEN 3
-      *                
-      *            WHEN 4
-      *            
-      *            WHEN 5
-      *               
-                   WHEN 6
+                  WHEN 3
+                       PERFORM VIEW-INVENTORY-ITEMS
+                  WHEN 6
                        DISPLAY "Exiting..."
-                   WHEN OTHER
+                  WHEN OTHER
                        DISPLAY "Invalid choice, please try again."
                END-EVALUATE
            END-PERFORM
            CLOSE INVENTORY-FILE
+           
            STOP RUN.
 
        ADD-ITEM.
@@ -86,3 +80,26 @@
            WRITE INVENTORY-RECORD
            DISPLAY "Item's add succesfully".
 
+       VIEW-INVENTORY-ITEMS.
+           CALL "SYSTEM" USING "CLS"
+           DISPLAY "||==========================================================||"
+           DISPLAY "||                     List of Items                        ||"
+           DISPLAY "||==========================================================||"
+           
+           OPEN INPUT INVENTORY-FILE
+           PERFORM UNTIL FILE-STATUS = "10"
+               READ INVENTORY-FILE INTO INVENTORY-RECORD
+                   AT END
+                       DISPLAY "   ID: "ITEM-ID
+                       DISPLAY "   Name: "ITEM-NAME
+                       DISPLAY "   Price: "ITEM-PRICE
+                       DISPLAY "   Quantity: "ITEM-QUANTITY
+                   NOT AT END
+                       DISPLAY "No more items to display."
+               END-READ
+           END-PERFORM
+           CLOSE INVENTORY-FILE
+           DISPLAY "||==========================================================||"
+           DISPLAY "Press any key to return to the menu." 
+           ACCEPT UserChoice.
+              
