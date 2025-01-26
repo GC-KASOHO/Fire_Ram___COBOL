@@ -14,11 +14,11 @@
                DISPLAY "||=======================================||"
                DISPLAY "||     Inventory Management System       ||"
                DISPLAY "||=======================================||"
-               DISPLAY "||   1. Add Item                         ||"
-               DISPLAY "||   2. Update Item                      ||"
-               DISPLAY "||   3. View Inventory                   ||"
-               DISPLAY "||   4. Search Item                      ||"
-               DISPLAY "||   5. Delete Item                      ||"
+               DISPLAY "||   1. Add Item                         ||"*>Ed
+               DISPLAY "||   2. Update Item                      ||"*>Ki
+               DISPLAY "||   3. View Inventory                   ||"*>Ma
+               DISPLAY "||   4. Search Item                      ||"*>Ke
+               DISPLAY "||   5. Delete Item                      ||"*>Ge
                DISPLAY "||   6. Exit                             ||"         
                DISPLAY "||=======================================||"
                DISPLAY "||   Enter your choice:                  ||"
