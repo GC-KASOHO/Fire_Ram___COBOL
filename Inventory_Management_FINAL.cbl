@@ -64,7 +64,7 @@
                    WHEN 6 PERFORM EXPORT-TO-CSV
                    WHEN 7
                        DISPLAY " "
-                       DISPLAY "[SYSTEM] TERMINATING PROGRAM..."
+                       DISPLAY "  TERMINATING PROGRAM..."
                        CLOSE INVENTORY-FILE
                        MOVE 'Y' TO WS-EndOfFile
                    WHEN OTHER DISPLAY "INVALID OPTION"
@@ -92,7 +92,7 @@
                NOT INVALID 
                    DISPLAY "Item Code already exists!"
                    CLOSE INVENTORY-FILE
-                   DISPLAY "[SYSTEM] Press any key to continue..."
+                   DISPLAY "  Press any key to continue..."
                    ACCEPT WS-WAITFORINPUT
                    EXIT PARAGRAPH
            END-READ.
@@ -118,7 +118,7 @@
            END-WRITE.
            
            CLOSE INVENTORY-FILE.
-           DISPLAY "[SYSTEM] Press any key to continue..."
+           DISPLAY "  Press any key to continue..."
            ACCEPT WS-WAITFORINPUT.
 
        UPDATE-ITEM.
@@ -134,7 +134,7 @@
                INVALID KEY 
                    DISPLAY "Item not found!"
                    CLOSE INVENTORY-FILE
-                   DISPLAY "[SYSTEM] Press any key to continue..."
+                   DISPLAY "  Press any key to continue..."
                    ACCEPT WS-WAITFORINPUT
                    EXIT PARAGRAPH
                NOT INVALID KEY 
@@ -170,7 +170,7 @@
            END-READ.
            
            CLOSE INVENTORY-FILE.
-           DISPLAY "[SYSTEM] Press any key to continue..."
+           DISPLAY "  Press any key to continue..."
            ACCEPT WS-WAITFORINPUT.
 
        SEARCH-ITEM.
@@ -196,7 +196,7 @@
            END-READ.
            
            CLOSE INVENTORY-FILE.
-           DISPLAY "[SYSTEM] Press any key to continue..."
+           DISPLAY "  Press any key to continue..."
            ACCEPT WS-WAITFORINPUT.
 
        DELETE-ITEM.
@@ -212,7 +212,7 @@
                INVALID KEY 
                    DISPLAY "Item not found!"
                    CLOSE INVENTORY-FILE
-                   DISPLAY "[SYSTEM] Press any key to continue..."
+                   DISPLAY "  Press any key to continue..."
                    ACCEPT WS-WAITFORINPUT
                    EXIT PARAGRAPH
                NOT INVALID KEY 
@@ -225,7 +225,7 @@
            END-READ.
            
            CLOSE INVENTORY-FILE.
-           DISPLAY "[SYSTEM] Press any key to continue..."
+           DISPLAY "  Press any key to continue..."
            ACCEPT WS-WAITFORINPUT.
 
        VIEW-INVENTORY.
@@ -252,13 +252,13 @@
            END-PERFORM.
 
            CLOSE INVENTORY-FILE.
-           DISPLAY "[SYSTEM] Press any key to continue..."
+           DISPLAY "  Press any key to continue..."
            ACCEPT WS-WAITFORINPUT.
 
        EXPORT-TO-CSV.
            OPEN OUTPUT CSV-FILE.
            OPEN INPUT INVENTORY-FILE.
-           DISPLAY "[SYSTEM] Exporting Inventory to CSV File..."
+           DISPLAY "  Exporting Inventory to CSV File..."
 
            PERFORM UNTIL FILESTATUS = "10"
                READ INVENTORY-FILE
@@ -281,8 +281,8 @@
 
            CLOSE INVENTORY-FILE.
            CLOSE CSV-FILE.
-           DISPLAY "[SYSTEM] Data exported to CSV Successfully!"
-           DISPLAY "[SYSTEM] Press any key to continue..."
+           DISPLAY "  Data exported to CSV Successfully!"
+           DISPLAY "  Press any key to continue..."
            ACCEPT WS-WAITFORINPUT.
 
            
