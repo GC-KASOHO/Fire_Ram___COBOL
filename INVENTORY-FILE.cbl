@@ -4,23 +4,19 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT INVENTORY-FILE ASSIGN TO "INVENTORY.DAT"
+           SELECT INVENTORY-FILE ASSIGN TO "INVENTORY.TXT"
                ORGANIZATION IS LINE SEQUENTIAL
                ACCESS MODE IS SEQUENTIAL
                FILE STATUS IS FILE-STATUS.
-           SELECT CSV-FILE ASSIGN TO "INVENTORY.CSV"
-               ORGANIZATION IS LINE SEQUENTIAL.
 
        DATA DIVISION.
        FILE SECTION.   
        FD INVENTORY-FILE.
        01 INVENTORY-RECORD.
+           05 ITEM-ID PIC 9(5).
            05 ITEM-NAME PIC X(20).
            05 ITEM-PRICE PIC 9(5).
            05 ITEM-QUANTITY PIC 9(5).
-           05 ITEM-ID PIC 9(5).
-       FD CSV-FILE.
-       01 CSV-RECROD PIC X(40).
 
        WORKING-STORAGE SECTION.
        01  UserChoice  PIC 9.
@@ -31,9 +27,9 @@
        01 I-QUANTITY PIC 9(5).
 
        PROCEDURE DIVISION.
-           OPEN I-O INVENTORY-FILE
+           PERFORM INITIALIZE
            PERFORM UNTIL UserChoice = 6
-           CALL "SYSTEM" USING "CLS"
+               CALL "SYSTEM" USING "CLS"
                DISPLAY "||=======================================||"
                DISPLAY "||     Inventory Management System       ||"
                DISPLAY "||=======================================||"
@@ -47,19 +43,20 @@
                DISPLAY  "Enter your choice: " NO ADVANCING    
                ACCEPT UserChoice
                EVALUATE UserChoice
-                  WHEN 1
-                       PERFORM ADD-ITEM
-                  WHEN 3
-                       PERFORM VIEW-INVENTORY-ITEMS
-                  WHEN 6
-                       DISPLAY "Exiting..."
-                  WHEN OTHER
-                       DISPLAY "Invalid choice, please try again."
+                  WHEN 1 PERFORM ADD-ITEM
+                  WHEN 3 PERFORM VIEW-INVENTORY-ITEMS
+                  WHEN 6 DISPLAY "Exiting..."
+                  WHEN OTHER DISPLAY "Invalid choice, please try again."
                END-EVALUATE
            END-PERFORM
            CLOSE INVENTORY-FILE
-           
            STOP RUN.
+
+       INITIALIZE.
+           OPEN I-O INVENTORY-FILE
+           IF FILE-STATUS NOT = "00"
+               DISPLAY "Error opening file."
+               STOP RUN.
 
        ADD-ITEM.
            CALL "SYSTEM" USING "CLS"
@@ -78,28 +75,31 @@
            MOVE I-QUANTITY TO ITEM-QUANTITY.
 
            WRITE INVENTORY-RECORD
-           DISPLAY "Item's add succesfully".
+           IF FILE-STATUS = "00"
+               DISPLAY "Item added successfully."
+           ELSE
+               DISPLAY "Error writing to file."
+           END-IF.
 
        VIEW-INVENTORY-ITEMS.
            CALL "SYSTEM" USING "CLS"
-           DISPLAY "||==========================================================||"
-           DISPLAY "||                     List of Items                        ||"
-           DISPLAY "||==========================================================||"
+           DISPLAY "||===============================================||"
+           DISPLAY "||               List of Items                   ||"
+           DISPLAY "||===============================================||"
            
            OPEN INPUT INVENTORY-FILE
-           PERFORM UNTIL FILE-STATUS = "10"
+           PERFORM UNTIL FILE-STATUS = "10"  *> End of file
                READ INVENTORY-FILE INTO INVENTORY-RECORD
                    AT END
-                       DISPLAY "   ID: "ITEM-ID
-                       DISPLAY "   Name: "ITEM-NAME
-                       DISPLAY "   Price: "ITEM-PRICE
-                       DISPLAY "   Quantity: "ITEM-QUANTITY
+                       EXIT PERFORM
                    NOT AT END
-                       DISPLAY "No more items to display."
+                       DISPLAY "   ID: " ITEM-ID
+                       DISPLAY "   Name: " ITEM-NAME
+                       DISPLAY "   Price: " ITEM-PRICE
+                       DISPLAY "   Quantity: " ITEM-QUANTITY
                END-READ
            END-PERFORM
            CLOSE INVENTORY-FILE
-           DISPLAY "||==========================================================||"
+           DISPLAY "||===============================================||"
            DISPLAY "Press any key to return to the menu." 
            ACCEPT UserChoice.
-              
