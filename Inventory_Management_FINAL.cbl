@@ -80,9 +80,9 @@
            END-IF.
 
            CALL "SYSTEM" USING "CLS"
-           DISPLAY "------------------------------------"
+           DISPLAY "======================================="
            DISPLAY "           ADD NEW ITEM"
-           DISPLAY "------------------------------------"
+           DISPLAY "======================================="
            DISPLAY "Enter Item Code: " NO ADVANCING
            ACCEPT ITEM-CODE.
            
@@ -124,9 +124,9 @@
        UPDATE-ITEM.
            OPEN I-O INVENTORY-FILE.
            CALL "SYSTEM" USING "CLS"
-           DISPLAY "------------------------------------"
+           DISPLAY "======================================="
            DISPLAY "         UPDATE ITEM DETAILS"
-           DISPLAY "------------------------------------"
+           DISPLAY "======================================="
            DISPLAY "Enter Item Code to update: " NO ADVANCING
            ACCEPT ITEM-CODE.
            
@@ -176,9 +176,9 @@
        SEARCH-ITEM.
            OPEN INPUT INVENTORY-FILE.
            CALL "SYSTEM" USING "CLS"
-           DISPLAY "------------------------------------"
+           DISPLAY "======================================="
            DISPLAY "           SEARCH ITEM"
-           DISPLAY "------------------------------------"
+           DISPLAY "======================================="
            DISPLAY "Enter Item Code to search: " NO ADVANCING
            ACCEPT ITEM-CODE.
            
@@ -202,9 +202,9 @@
        DELETE-ITEM.
            OPEN I-O INVENTORY-FILE.
            CALL "SYSTEM" USING "CLS"
-           DISPLAY "------------------------------------"
+           DISPLAY "======================================="
            DISPLAY "           DELETE ITEM"
-           DISPLAY "------------------------------------"
+           DISPLAY "======================================="
            DISPLAY "Enter Item Code to delete: " NO ADVANCING
            ACCEPT ITEM-CODE.
            
@@ -231,9 +231,9 @@
        VIEW-INVENTORY.
            OPEN INPUT INVENTORY-FILE.
            CALL "SYSTEM" USING "CLS"
-           DISPLAY "------------------------------------"
+           DISPLAY "======================================="
            DISPLAY "         INVENTORY LISTING"
-           DISPLAY "------------------------------------"
+           DISPLAY "======================================="
            
            PERFORM UNTIL FILESTATUS = "10"
                READ INVENTORY-FILE
